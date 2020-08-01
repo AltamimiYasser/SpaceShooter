@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             float random = Random.Range(3, 8);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(random);
             Vector3 offset = new Vector3(0, -1.05f, 0);
             GameObject laserObject = Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
             Laser laser = laserObject.GetComponent<Laser>();
