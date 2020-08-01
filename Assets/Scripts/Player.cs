@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,26 +10,29 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _laserPrefab;
+
     [SerializeField]
     private GameObject _tripleLaserPrefab;
 
     [SerializeField]
     private float _speed = 3.5f;
+
     private float _originalSpeed;
+    private float _thrusterSpeed = 10.0f;
 
     [SerializeField]
     private float _fireRate = 0.5f;
+
     private float _canFire = -1f;
     private bool _tripleShotsEnabled = false;
 
-
     [SerializeField]
     private GameObject _playerSheild;
+
     private bool _sheildActive = false;
 
     [SerializeField]
     private GameObject _enginLeftHurt, _enginRightHurt;
-
 
     private SpawnManager spawnManager;
 
@@ -75,6 +77,11 @@ public class Player : MonoBehaviour
         float yInput = Input.GetAxis("Vertical");
 
         Vector3 displacement = new Vector3(xInput, yInput, 0);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+            _speed = _thrusterSpeed;
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            _speed = _originalSpeed;
 
         transform.Translate(displacement * _speed * Time.deltaTime);
     }
@@ -127,6 +134,7 @@ public class Player : MonoBehaviour
             case 2:
                 _enginLeftHurt.SetActive(true);
                 break;
+
             case 1:
                 _enginRightHurt.SetActive(true);
                 break;

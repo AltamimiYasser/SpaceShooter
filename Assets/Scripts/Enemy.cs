@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     private AudioSource _explosionSound;
 
-    void Start()
+    private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
@@ -57,7 +57,6 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Laser" && other.GetComponent<Laser>().getCaller() == "Player")
         {
-
             print("Player shooter");
             Destroy(other.gameObject);
             _player.AddToScore(1);
@@ -66,11 +65,10 @@ public class Enemy : MonoBehaviour
             _speed *= 1.2f;
             _explosionSound.Play();
             Destroy(this.gameObject, 2.5f);
-
         }
     }
 
-    IEnumerator Fire()
+    private IEnumerator Fire()
     {
         while (true)
         {
