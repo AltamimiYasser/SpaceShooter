@@ -43,6 +43,7 @@ public class PowerUp : MonoBehaviour
                     break;
                 case PowerUpType.Sheild:
                     player.EnableSheild();
+                    player.setSheildHits();
                     break;
             }
             Destroy(this.gameObject);

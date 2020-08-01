@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private GameObject _playerSheild;
 
     private bool _sheildActive = false;
+    [SerializeField] private int _sheildHits = 3;
+    private SpriteRenderer _sheildRenderer;
 
     [SerializeField]
     private GameObject _enginLeftHurt, _enginRightHurt;
@@ -50,6 +52,10 @@ public class Player : MonoBehaviour
         _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         if (_uIManager == null)
             Debug.LogError("UIManger is null");
+
+        _sheildRenderer = transform.Find("PlayerSheild").GetComponent<SpriteRenderer>();
+        if (_sheildRenderer == null)
+            Debug.LogError("Sprite renderer is null");
     }
 
     // Update is called once per frame
@@ -120,8 +126,27 @@ public class Player : MonoBehaviour
     {
         if (_sheildActive)
         {
-            _sheildActive = false;
-            _playerSheild.SetActive(false);
+            _sheildHits--;
+
+            if (_sheildHits == 0)
+            {
+                _sheildActive = false;
+                _playerSheild.SetActive(false);
+                _sheildHits = 3;
+            }
+
+            switch (_sheildHits)
+            {
+                case 3:
+                    _sheildRenderer.color = new Color(0f, 0f, 1f); // blue
+                    break;
+                case 2:
+                    _sheildRenderer.color = new Color(1f, 0.54f, 0f); // orange
+                    break;
+                case 1:
+                    _sheildRenderer.color = new Color(1, 0, 0); // red
+                    break;
+            }
             return;
         }
 
@@ -182,5 +207,10 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uIManager.setScore(_score);
+    }
+
+    public void setSheildHits()
+    {
+        _sheildHits = 3;
     }
 }

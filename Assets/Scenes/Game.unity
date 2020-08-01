@@ -257,6 +257,7 @@ MonoBehaviour:
   _speed: 5
   _fireRate: 0.15
   _playerSheild: {fileID: 468748905}
+  _sheildHits: 3
   _enginLeftHurt: {fileID: 1584334647}
   _enginRightHurt: {fileID: 1083328303}
 --- !u!212 &380587694
@@ -1061,6 +1062,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7149117120640406005, guid: 32595938c0f16744bb60b52c10eb981c, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149117120640406005, guid: 32595938c0f16744bb60b52c10eb981c, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149117120640406005, guid: 32595938c0f16744bb60b52c10eb981c, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149117120640406005, guid: 32595938c0f16744bb60b52c10eb981c, type: 3}
+      propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8387573369971268165, guid: 32595938c0f16744bb60b52c10eb981c, type: 3}
