@@ -1077,6 +1077,7 @@ MonoBehaviour:
   - {fileID: 7404207107982322934, guid: 1d3120dc76c6021439df8ea0bdda0419, type: 3}
   - {fileID: 561378882869743624, guid: 68acf4156229ae94aa814d3d9c425cca, type: 3}
   - {fileID: 1147524541223785056, guid: 93a05a8d60f08104e99deacd9faffef8, type: 3}
+  - {fileID: 4310520022397619760, guid: 4efefa7ddd8398149824b5df42514683, type: 3}
   _minEnemiesSpawnRate: 0.5
   _maxEnemiesSpawnRate: 2
   minPowerUpSpawnRate: 3

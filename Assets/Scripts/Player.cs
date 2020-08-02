@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
 
     private float _canFire = -1f;
-    [SerializeField] private float _shoteLeft = 15;
+    private float _shoteLeft = 15;
     private bool _tripleShotsEnabled = false;
     private AudioSource _outOfAmmoSound;
 
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     private GameObject _playerSheild;
 
     private bool _sheildActive = false;
-    [SerializeField] private int _sheildHits = 3;
+    private int _sheildHits = 3;
     private SpriteRenderer _sheildRenderer;
 
     [SerializeField]
@@ -144,23 +144,10 @@ public class Player : MonoBehaviour
 
             if (_sheildHits == 0)
             {
-                _sheildActive = false;
-                _playerSheild.SetActive(false);
-                _sheildHits = 3;
+                DisableSheild();
             }
 
-            switch (_sheildHits)
-            {
-                case 3:
-                    _sheildRenderer.color = new Color(0f, 0f, 1f); // blue
-                    break;
-                case 2:
-                    _sheildRenderer.color = new Color(1f, 0.54f, 0f); // orange
-                    break;
-                case 1:
-                    _sheildRenderer.color = new Color(1, 0, 0); // red
-                    break;
-            }
+            SetSheildColor();
             return;
         }
 
@@ -168,8 +155,22 @@ public class Player : MonoBehaviour
         _uIManager.setLives(_lives);
 
         // burn animation
+        AnimateEnginHit();
+
+        if (_lives < 1)
+        {
+            Die();
+        }
+    }
+
+    private void AnimateEnginHit()
+    {
         switch (_lives)
         {
+            case 3:
+                _enginLeftHurt.SetActive(false);
+                _enginRightHurt.SetActive(false);
+                break;
             case 2:
                 _enginLeftHurt.SetActive(true);
                 break;
@@ -178,13 +179,36 @@ public class Player : MonoBehaviour
                 _enginRightHurt.SetActive(true);
                 break;
         }
+    }
 
-        if (_lives < 1)
+    private void Die()
+    {
+        spawnManager.onPlayerDeath();
+        _uIManager.EnableGameover();
+        Destroy(this.gameObject);
+    }
+
+    private void SetSheildColor()
+    {
+        switch (_sheildHits)
         {
-            spawnManager.onPlayerDeath();
-            _uIManager.EnableGameover();
-            Destroy(this.gameObject);
+            case 3:
+                _sheildRenderer.color = new Color(0f, 0f, 1f); // blue
+                break;
+            case 2:
+                _sheildRenderer.color = new Color(1f, 0.54f, 0f); // orange
+                break;
+            case 1:
+                _sheildRenderer.color = new Color(1, 0, 0); // red
+                break;
         }
+    }
+
+    private void DisableSheild()
+    {
+        _sheildActive = false;
+        _playerSheild.SetActive(false);
+        _sheildHits = 3;
     }
 
     public void EnableTripleShot()
@@ -231,5 +255,15 @@ public class Player : MonoBehaviour
     public void resetShotsLeft(int shots)
     {
         _shoteLeft = shots;
+    }
+
+    public void IncreaseLives()
+    {
+        if (_lives < 3)
+        {
+            _lives++;
+            AnimateEnginHit();
+            _uIManager.setLives(_lives);
+        }
     }
 }
