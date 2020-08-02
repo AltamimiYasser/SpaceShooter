@@ -57,7 +57,6 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Laser" && other.GetComponent<Laser>().getCaller() == "Player")
         {
-            print("Player shooter");
             Destroy(other.gameObject);
             _player.AddToScore(1);
             _anim.SetTrigger("Explode");

@@ -24,7 +24,9 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
 
     private float _canFire = -1f;
+    private float _shoteLeft = 15;
     private bool _tripleShotsEnabled = false;
+    private AudioSource _outOfAmmoSound;
 
     [SerializeField]
     private GameObject _playerSheild;
@@ -56,6 +58,10 @@ public class Player : MonoBehaviour
         _sheildRenderer = transform.Find("PlayerSheild").GetComponent<SpriteRenderer>();
         if (_sheildRenderer == null)
             Debug.LogError("Sprite renderer is null");
+
+        _outOfAmmoSound = GetComponent<AudioSource>();
+        if (_outOfAmmoSound == null)
+            Debug.LogError("Out of Ammo sound effect is null");
     }
 
     // Update is called once per frame
@@ -105,20 +111,28 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        _canFire = Time.time + _fireRate;
-        if (_tripleShotsEnabled)
+        if (_shoteLeft > 0)
         {
-            Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
+            _shoteLeft--;
+            _canFire = Time.time + _fireRate;
+            if (_tripleShotsEnabled)
+            {
+                Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Vector3 offset = new Vector3(0, 1.05f, 0);
+                GameObject laserObject = Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+                Laser laser = laserObject.GetComponent<Laser>();
+                if (laserObject == null || laser == null)
+                    Debug.LogError("Laser object or laser is null");
+
+                laser.setCaller("Player");
+            }
         }
         else
         {
-            Vector3 offset = new Vector3(0, 1.05f, 0);
-            GameObject laserObject = Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
-            Laser laser = laserObject.GetComponent<Laser>();
-            if (laserObject == null || laser == null)
-                Debug.LogError("Laser object or laser is null");
-
-            laser.setCaller("Player");
+            _outOfAmmoSound.Play();
         }
     }
 
