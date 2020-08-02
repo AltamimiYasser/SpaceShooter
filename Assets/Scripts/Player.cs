@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
 
     private float _canFire = -1f;
-    private float _shoteLeft = 15;
+    [SerializeField] private float _shoteLeft = 15;
     private bool _tripleShotsEnabled = false;
     private AudioSource _outOfAmmoSound;
 
@@ -226,5 +226,10 @@ public class Player : MonoBehaviour
     public void setSheildHits()
     {
         _sheildHits = 3;
+    }
+
+    public void resetShotsLeft(int shots)
+    {
+        _shoteLeft = shots;
     }
 }
