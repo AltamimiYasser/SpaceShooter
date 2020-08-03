@@ -13,23 +13,33 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _powerUps;
 
     [SerializeField]
+    private GameObject _extraFirePowerUpPrefab;
+
+    [SerializeField]
     private float _minEnemiesSpawnRate = 1.0f;
 
     [SerializeField]
     private float _maxEnemiesSpawnRate = 5.0f;
 
     [SerializeField]
-    private float minPowerUpSpawnRate = 3.0f;
+    private float _minPowerUpSpawnRate = 3.0f;
 
     [SerializeField]
-    private float maxPowerUpSpawnRate = 7.0f;
+    private float _maxPowerUpSpawnRate = 7.0f;
+
+    [SerializeField]
+    private float _minExtraFireSpawnRate = 7.0f;
+
+    [SerializeField]
+    private float _maxExtraFireSpawnRate = 15.0f;
 
     private bool _allowedToSpawn = true;
 
     public void StartSpawning()
     {
         StartCoroutine(SpawnEnemies());
-        StartCoroutine(spawnRandomPowerUp());
+        StartCoroutine(SpawnRandomPowerUp());
+        StartCoroutine(SpawnExtraFire());
     }
 
     private IEnumerator SpawnEnemies()
@@ -46,18 +56,27 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator spawnRandomPowerUp()
+    private IEnumerator SpawnRandomPowerUp()
     {
-        yield return new WaitForSeconds(0.3f);
-
         while (_allowedToSpawn)
         {
-            float spawnRate = Random.Range(minPowerUpSpawnRate, maxPowerUpSpawnRate);
+            float spawnRate = Random.Range(_minPowerUpSpawnRate, _maxPowerUpSpawnRate);
             yield return new WaitForSeconds(spawnRate);
             Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 9.5f, 0.0f);
 
             GameObject randomPowerUp = _powerUps[Random.Range(0, _powerUps.Length)];
             Instantiate(randomPowerUp, posToSpawn, Quaternion.identity);
+        }
+    }
+
+    private IEnumerator SpawnExtraFire()
+    {
+        while (_allowedToSpawn)
+        {
+            float spawnRate = Random.Range(_minExtraFireSpawnRate, _maxExtraFireSpawnRate);
+            yield return new WaitForSeconds(spawnRate);
+            Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 9.5f, 0.0f);
+            Instantiate(_extraFirePowerUpPrefab, posToSpawn, Quaternion.identity);
         }
     }
 

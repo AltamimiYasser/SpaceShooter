@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleLaserPrefab;
 
+    [SerializeField] // 
+    private GameObject _extraFirePrefab;
+
     [SerializeField]
     private float _speed = 3.5f;
 
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     private float _shoteLeft = 15;
     private bool _tripleShotsEnabled = false;
+    private bool _extraFireEnabled = false;
     private AudioSource _outOfAmmoSound;
 
     [SerializeField]
@@ -118,6 +122,10 @@ public class Player : MonoBehaviour
             if (_tripleShotsEnabled)
             {
                 Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
+            }
+            else if (_extraFireEnabled)
+            {
+                Instantiate(_extraFirePrefab, transform.position, Quaternion.identity);
             }
             else
             {
@@ -217,10 +225,22 @@ public class Player : MonoBehaviour
         StartCoroutine(DisableTripleShot());
     }
 
+    public void EnableExtraFire()
+    {
+        _extraFireEnabled = true;
+        StartCoroutine(DisableExtraFire());
+    }
+
     private IEnumerator DisableTripleShot()
     {
         yield return new WaitForSeconds(5);
         _tripleShotsEnabled = false;
+    }
+
+    private IEnumerator DisableExtraFire()
+    {
+        yield return new WaitForSeconds(5);
+        _extraFireEnabled = false;
     }
 
     public void EnableSpeedBoost()
