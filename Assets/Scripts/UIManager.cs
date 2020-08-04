@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,24 +9,30 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Image _livesImage;
+
     [SerializeField]
     private Sprite[] _livesSprites;
 
     [SerializeField]
     private Text _gameOverText;
+
     [SerializeField]
     private Text _restartTextInstruction;
 
+    private TrhurserCharg _trhurserCharg;
+
     private GameManager _gameManager;
 
-
-    void Start()
+    private void Start()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (_gameManager == null)
             Debug.LogError("GameManger is null");
-    }
 
+        _trhurserCharg = GameObject.Find("ThrusterBarCharg").GetComponent<TrhurserCharg>();
+        if (_trhurserCharg == null)
+            Debug.LogError("Thruster charge is null");
+    }
 
     public void setScore(int score)
     {
@@ -47,7 +51,7 @@ public class UIManager : MonoBehaviour
         _gameManager.setGameover();
     }
 
-    IEnumerator FlickerGameoverText()
+    private IEnumerator FlickerGameoverText()
     {
         while (true)
         {
@@ -56,5 +60,10 @@ public class UIManager : MonoBehaviour
             _gameOverText.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void UpdateThrusterCharge(float charge)
+    {
+        _trhurserCharg.UpdateCharge(charge);
     }
 }

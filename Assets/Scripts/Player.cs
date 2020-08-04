@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleLaserPrefab;
 
-    [SerializeField] // 
+    [SerializeField] //
     private GameObject _extraFirePrefab;
 
     [SerializeField]
@@ -42,6 +42,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _enginLeftHurt, _enginRightHurt;
 
+    [SerializeField]
+    private float _thrusterCoolDown = 15.0f;
+    private float _thrusterCooldDownTimer;
+
     private SpawnManager spawnManager;
 
     private UIManager _uIManager;
@@ -66,6 +70,8 @@ public class Player : MonoBehaviour
         _outOfAmmoSound = GetComponent<AudioSource>();
         if (_outOfAmmoSound == null)
             Debug.LogError("Out of Ammo sound effect is null");
+
+        _thrusterCooldDownTimer = _thrusterCoolDown;
     }
 
     // Update is called once per frame
@@ -94,11 +100,19 @@ public class Player : MonoBehaviour
 
         Vector3 displacement = new Vector3(xInput, yInput, 0);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && _thrusterCooldDownTimer > 0)
+        {
+            _thrusterCooldDownTimer -= Time.deltaTime;
             _speed = _thrusterSpeed;
+        }
+
         if (Input.GetKeyUp(KeyCode.LeftShift))
             _speed = _originalSpeed;
 
+        if (!Input.GetKey(KeyCode.LeftShift))
+            _thrusterCooldDownTimer = Mathf.Min(_thrusterCooldDownTimer + Time.deltaTime, _thrusterCoolDown);
+
+        _uIManager.UpdateThrusterCharge(_thrusterCooldDownTimer / _thrusterCoolDown);
         transform.Translate(displacement * _speed * Time.deltaTime);
     }
 
@@ -179,6 +193,7 @@ public class Player : MonoBehaviour
                 _enginLeftHurt.SetActive(false);
                 _enginRightHurt.SetActive(false);
                 break;
+
             case 2:
                 _enginLeftHurt.SetActive(true);
                 break;
@@ -203,9 +218,11 @@ public class Player : MonoBehaviour
             case 3:
                 _sheildRenderer.color = new Color(0f, 0f, 1f); // blue
                 break;
+
             case 2:
                 _sheildRenderer.color = new Color(1f, 0.54f, 0f); // orange
                 break;
+
             case 1:
                 _sheildRenderer.color = new Color(1, 0, 0); // red
                 break;

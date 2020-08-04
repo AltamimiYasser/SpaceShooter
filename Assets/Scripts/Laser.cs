@@ -6,6 +6,7 @@ public class Laser : MonoBehaviour
     private float _speed = 8.0f;
 
     private enum Callers { player, enemy };
+
     private Callers _caller;
 
     // Update is called once per frame
@@ -48,9 +49,11 @@ public class Laser : MonoBehaviour
             case "Player":
                 _caller = Callers.player;
                 break;
+
             case "Enemy":
                 _caller = Callers.enemy;
                 break;
+
             default:
                 Debug.LogError("Caller incorrect");
                 break;
@@ -63,8 +66,10 @@ public class Laser : MonoBehaviour
         {
             case Callers.player:
                 return "Player";
+
             case Callers.enemy:
                 return "Enemy";
+
             default:
                 return "error";
         }

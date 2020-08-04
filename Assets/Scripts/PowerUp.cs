@@ -8,7 +8,6 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private PowerUpType _powerUpType;
 
-
     [SerializeField]
     private float _speed = 3.0f;
 
@@ -38,19 +37,24 @@ public class PowerUp : MonoBehaviour
                 case PowerUpType.TripleShot:
                     player.EnableTripleShot();
                     break;
+
                 case PowerUpType.Speed:
                     player.EnableSpeedBoost();
                     break;
+
                 case PowerUpType.Sheild:
                     player.EnableSheild();
                     player.setSheildHits();
                     break;
+
                 case PowerUpType.Ammo:
                     player.resetShotsLeft(15);
                     break;
+
                 case PowerUpType.Health:
                     player.IncreaseLives();
                     break;
+
                 case PowerUpType.ExtraFire:
                     player.EnableExtraFire();
                     break;
