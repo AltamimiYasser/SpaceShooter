@@ -47,8 +47,11 @@ public class Player : MonoBehaviour
     private float _thrusterCooldDownTimer;
 
     private SpawnManager spawnManager;
-
     private UIManager _uIManager;
+    private CameraShake _cameraShake;
+
+    [SerializeField]
+    private float _cameraShakeLength = 0.3f;
 
     private void Start()
     {
@@ -70,6 +73,10 @@ public class Player : MonoBehaviour
         _outOfAmmoSound = GetComponent<AudioSource>();
         if (_outOfAmmoSound == null)
             Debug.LogError("Out of Ammo sound effect is null");
+
+        _cameraShake = Camera.main.GetComponent<CameraShake>();
+        if (_cameraShake == null)
+            Debug.LogError("Camera shake is null");
 
         _thrusterCooldDownTimer = _thrusterCoolDown;
     }
@@ -176,13 +183,15 @@ public class Player : MonoBehaviour
         _lives--;
         _uIManager.setLives(_lives);
 
-        // burn animation
         AnimateEnginHit();
+        StartCoroutine(_cameraShake.ShakeCamera(_cameraShakeLength));
 
         if (_lives < 1)
         {
             Die();
         }
+
+
     }
 
     private void AnimateEnginHit()
