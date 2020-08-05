@@ -296,16 +296,22 @@ public class Player : MonoBehaviour
         _uIManager.setScore(_score);
     }
 
-    public void setSheildHits()
+    public void SetSheildHits()
     {
         _sheildHits = 3;
         SetSheildColor();
     }
 
-    public void resetShotsLeft(int shots)
+    public void ResetShotsLeft(int shots)
     {
         _shoteLeft = shots;
-        _uIManager.UpdateAmmoCharge(shots);
+        _uIManager.UpdateAmmoCharge(_shoteLeft);
+    }
+
+    public void DecreaseAmmo(int amount)
+    {
+        _shoteLeft -= amount;
+        _uIManager.UpdateAmmoCharge(_shoteLeft);
     }
 
     public void IncreaseLives()

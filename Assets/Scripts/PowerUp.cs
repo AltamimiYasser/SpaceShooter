@@ -3,7 +3,7 @@
 public class PowerUp : MonoBehaviour
 {
     // enum to hold all the types of powerUps we can have
-    private enum PowerUpType { TripleShot, Speed, Sheild, Ammo, Health, ExtraFire };
+    private enum PowerUpType { TripleShot, Speed, Sheild, Ammo, Health, ExtraFire, StealAmmo };
 
     [SerializeField]
     private PowerUpType _powerUpType;
@@ -36,7 +36,7 @@ public class PowerUp : MonoBehaviour
             {
                 case PowerUpType.TripleShot:
                     player.EnableTripleShot();
-                    player.resetShotsLeft(15);
+                    player.ResetShotsLeft(15);
                     break;
 
                 case PowerUpType.Speed:
@@ -45,11 +45,11 @@ public class PowerUp : MonoBehaviour
 
                 case PowerUpType.Sheild:
                     player.EnableSheild();
-                    player.setSheildHits();
+                    player.SetSheildHits();
                     break;
 
                 case PowerUpType.Ammo:
-                    player.resetShotsLeft(15);
+                    player.ResetShotsLeft(15);
                     break;
 
                 case PowerUpType.Health:
@@ -58,7 +58,11 @@ public class PowerUp : MonoBehaviour
 
                 case PowerUpType.ExtraFire:
                     player.EnableExtraFire();
-                    player.resetShotsLeft(15);
+                    player.ResetShotsLeft(15);
+                    break;
+
+                case PowerUpType.StealAmmo:
+                    player.DecreaseAmmo(5);
                     break;
             }
             Destroy(this.gameObject);

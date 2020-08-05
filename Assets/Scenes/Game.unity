@@ -862,7 +862,7 @@ RectTransform:
   - {fileID: 2023193774}
   - {fileID: 1824174835}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1081,6 +1081,7 @@ MonoBehaviour:
   - {fileID: 561378882869743624, guid: 68acf4156229ae94aa814d3d9c425cca, type: 3}
   - {fileID: 1147524541223785056, guid: 93a05a8d60f08104e99deacd9faffef8, type: 3}
   - {fileID: 4310520022397619760, guid: 4efefa7ddd8398149824b5df42514683, type: 3}
+  - {fileID: 4110022257474842401, guid: e8858cad1cb8ab840bb288859b98f4f4, type: 3}
   _extraFirePowerUpPrefab: {fileID: 7920239350808874636, guid: 1067a6ff80466da468191dfc966273dc, type: 3}
   _minEnemiesSpawnRate: 1
   _maxEnemiesSpawnRate: 3
@@ -2591,7 +2592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1616983024050138303, guid: 21ead4e091e0d054d8d09ba33f370725, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1616983024050138303, guid: 21ead4e091e0d054d8d09ba33f370725, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
