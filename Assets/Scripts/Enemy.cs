@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            float random = Random.Range(3, 8);
+            float random = Random.Range(6, 10);
             yield return new WaitForSeconds(random);
             var offset = new Vector3(0, -1.05f, 0);
             var laserObject = Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);

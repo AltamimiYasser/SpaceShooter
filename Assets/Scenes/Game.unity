@@ -1088,6 +1088,7 @@ MonoBehaviour:
   _maxPowerUpSpawnRate: 7
   _minExtraFireSpawnRate: 7
   _maxExtraFireSpawnRate: 15
+  waveSpawnRate: 5
 --- !u!4 &1480593959
 Transform:
   m_ObjectHideFlags: 0

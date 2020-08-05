@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class SpawnManager : MonoBehaviour
     private float _maxExtraFireSpawnRate = 15.0f;
 
     private bool _allowedToSpawn = true;
+    private int _wavCount = 5;
+    [SerializeField] private float waveSpawnRate = 3f;
 
     public void StartSpawning()
     {
@@ -48,11 +51,18 @@ public class SpawnManager : MonoBehaviour
 
         while (_allowedToSpawn)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 9.5f, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-            newEnemy.transform.parent = _enemiesContainer.transform;
-            float spawnRate = Random.Range(_minEnemiesSpawnRate, _maxEnemiesSpawnRate);
-            yield return new WaitForSeconds(spawnRate);
+            for (int i = 0; i < _wavCount; i++)
+            {
+                if (!_allowedToSpawn)
+                    break;
+                Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 9.5f, 0);
+                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+                newEnemy.transform.parent = _enemiesContainer.transform;
+                float spawnRate = Random.Range(_minEnemiesSpawnRate, _maxEnemiesSpawnRate);
+                yield return new WaitForSeconds(1.0f);
+            }
+            _wavCount += 3;
+            yield return new WaitForSeconds(waveSpawnRate);
         }
     }
 
