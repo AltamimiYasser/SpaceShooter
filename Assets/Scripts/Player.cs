@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
 
     private float _canFire = -1f;
-    private float _shoteLeft = 15;
+    private int _shoteLeft = 15;
     private bool _tripleShotsEnabled = false;
     private bool _extraFireEnabled = false;
     private AudioSource _outOfAmmoSound;
@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _cameraShakeLength = 0.3f;
+
+    private TrhurserCharg _ammoCharge;
 
     private void Start()
     {
@@ -139,6 +141,7 @@ public class Player : MonoBehaviour
         if (_shoteLeft > 0)
         {
             _shoteLeft--;
+            _uIManager.UpdateAmmoCharge(_shoteLeft);
             _canFire = Time.time + _fireRate;
             if (_tripleShotsEnabled)
             {
@@ -296,11 +299,13 @@ public class Player : MonoBehaviour
     public void setSheildHits()
     {
         _sheildHits = 3;
+        SetSheildColor();
     }
 
     public void resetShotsLeft(int shots)
     {
         _shoteLeft = shots;
+        _uIManager.UpdateAmmoCharge(shots);
     }
 
     public void IncreaseLives()

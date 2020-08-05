@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     private Text _restartTextInstruction;
 
     private TrhurserCharg _trhurserCharg;
+    private TrhurserCharg _ammoCharge;
 
     private GameManager _gameManager;
 
@@ -32,6 +33,10 @@ public class UIManager : MonoBehaviour
         _trhurserCharg = GameObject.Find("ThrusterBarCharg").GetComponent<TrhurserCharg>();
         if (_trhurserCharg == null)
             Debug.LogError("Thruster charge is null");
+
+        _ammoCharge = GameObject.Find("AmmoUI").GetComponent<TrhurserCharg>();
+        if (_ammoCharge == null)
+            Debug.LogError("Ammo charge is null");
     }
 
     public void setScore(int score)
@@ -65,5 +70,10 @@ public class UIManager : MonoBehaviour
     public void UpdateThrusterCharge(float charge)
     {
         _trhurserCharg.UpdateCharge(charge);
+    }
+
+    public void UpdateAmmoCharge(int ammo)
+    {
+        _ammoCharge.UpdateAmmo(ammo);
     }
 }

@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
 
     private Player _player;
     private Animator _anim;
-    
+
     private EnemyMovementType _movementType = EnemyMovementType.Straight;
 
     private AudioSource _explosionSound;
@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            var xDisplacement = transform.position.x > 0 ? -1 : 1;
+            var xDisplacement = transform.position.x >= 0 ? -1 : 1;
             var displacement = new Vector3(xDisplacement, -1, 0);
             transform.Translate(displacement * _speed * Time.deltaTime);
         }

@@ -36,6 +36,7 @@ public class PowerUp : MonoBehaviour
             {
                 case PowerUpType.TripleShot:
                     player.EnableTripleShot();
+                    player.resetShotsLeft(15);
                     break;
 
                 case PowerUpType.Speed:
@@ -57,6 +58,7 @@ public class PowerUp : MonoBehaviour
 
                 case PowerUpType.ExtraFire:
                     player.EnableExtraFire();
+                    player.resetShotsLeft(15);
                     break;
             }
             Destroy(this.gameObject);
