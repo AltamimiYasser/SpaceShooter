@@ -74,7 +74,34 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(spawnRate);
             Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 9.5f, 0.0f);
 
-            GameObject randomPowerUp = _powerUps[Random.Range(0, _powerUps.Length)];
+            int random = Random.Range(1, 101); // random number between 1 and 100
+            int index = 0;
+
+            // 0 tripleShots, 1 speed, 2, sheild, 3 ammo, 4 health, 5 steal
+            switch (random)
+            {
+                case int n when (n > 0 && n <= 40): // 40% chance of ammo
+                    index = 3;
+                    break;
+                case int n when (n > 40 && n <= 55): // 15% chance of health
+                    index = 4;
+                    break;
+                case int n when (n > 55 && n <= 70): // 15% chance of speed
+                    index = 1;
+                    break;
+                case int n when (n > 70 && n <= 80): // 10% chance of triple shots
+                    index = 0;
+                    break;
+                case int n when (n > 80 && n <= 90): // 10% chance of sheild
+                    index = 2;
+                    break;
+                    default: // 10% chance of steal powerup
+                        index = 5;
+                        break;
+            }
+            print("PowerUp now is at: " + index);
+
+            GameObject randomPowerUp = _powerUps[index];
             Instantiate(randomPowerUp, posToSpawn, Quaternion.identity);
         }
     }
