@@ -219,6 +219,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         spawnManager.onPlayerDeath();
+        
         _uIManager.EnableGameover();
         Destroy(this.gameObject);
     }

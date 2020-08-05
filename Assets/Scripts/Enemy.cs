@@ -6,8 +6,10 @@ using Random = UnityEngine.Random;
 public enum EnemyMovementType
 {
     Straight,
-    Angle
+    Angle,
+    Wavy
 }
+
 
 public class Enemy : MonoBehaviour
 {
@@ -24,15 +26,15 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        SetupType();
+        SetupTypes();
         InstantiateObjects();
         StartCoroutine(Fire());
     }
 
-    private void SetupType()
+    private void SetupTypes()
     {
         // pick a random type from enum
-        _movementType = (EnemyMovementType) Random.Range(0, System.Enum.GetValues(typeof(EnemyMovementType)).Length);
+        _movementType = (EnemyMovementType) Random.Range(0, Enum.GetValues(typeof(EnemyMovementType)).Length);
     }
 
     private void InstantiateObjects()
@@ -71,6 +73,12 @@ public class Enemy : MonoBehaviour
         if (_movementType == EnemyMovementType.Straight)
         {
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        else if (_movementType == EnemyMovementType.Wavy)
+        {
+            var xDisplacement = Mathf.Cos(Time.time);
+            var displacement = new Vector3(xDisplacement, -1, 0);
+            transform.Translate(displacement * _speed * Time.deltaTime);
         }
         else
         {
