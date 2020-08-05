@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,12 +18,16 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private GameObject _laserPrefab;
 
+    [SerializeField] private GameObject shield;
+
     private Player _player;
     private Animator _anim;
 
     private EnemyMovementType _movementType = EnemyMovementType.Straight;
 
     private AudioSource _explosionSound;
+
+    private bool _sheildActive = false;
 
     private void Start()
     {
@@ -92,6 +97,14 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            // allow for one hit when shield is active
+            if (_sheildActive)
+            {
+                _sheildActive = false;
+                _player.Damage();
+                return;
+            }
+
             _player.Damage();
             _anim.SetTrigger("Explode");
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -102,6 +115,14 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Laser" && other.GetComponent<Laser>().getCaller() == "Player")
         {
+            // allow for one hit when shield is active
+            if (_sheildActive)
+            {
+                _sheildActive = false;
+                Destroy(other.gameObject);
+                return;
+            }
+
             Destroy(other.gameObject);
             _player.AddToScore(1);
             _anim.SetTrigger("Explode");
@@ -126,5 +147,11 @@ public class Enemy : MonoBehaviour
 
             laser.setCaller("Enemy");
         }
+    }
+
+    public void EnableShield()
+    {
+        _sheildActive = true;
+        shield.SetActive(true);
     }
 }

@@ -67,5 +67,14 @@ public class PowerUp : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+        else if (other.tag == "Enemy")
+        {
+            Enemy enemy = other.transform.GetComponent<Enemy>();
+            if (enemy == null)
+                Debug.LogError("Enemy is null");
+
+            if (_powerUpType == PowerUpType.Sheild)
+                enemy.EnableShield();
+        }
     }
 }

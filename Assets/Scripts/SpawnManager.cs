@@ -99,7 +99,6 @@ public class SpawnManager : MonoBehaviour
                         index = 5;
                         break;
             }
-            print("PowerUp now is at: " + index);
 
             GameObject randomPowerUp = _powerUps[index];
             Instantiate(randomPowerUp, posToSpawn, Quaternion.identity);
